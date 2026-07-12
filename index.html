@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT PING 999 - Hệ Thống Key</title>
+    <style>
+        body { 
+            background-color: #060913; 
+            color: #ffffff; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            padding: 15px; 
+            box-sizing: border-box; 
+        }
+        .card { 
+            background-color: #0d111c; 
+            border: 1px solid #ff1e273b; 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 400px; 
+            padding: 30px 20px; 
+            text-align: center; 
+            box-shadow: 0 10px 30px rgba(255, 30, 39, 0.15); 
+        }
+
+        /* --- HIỆU ỨNG VIỀN ẢNH CHẠY NEON ĐỎ NHÒE SÁNG --- */
+        .avatar-box { 
+            position: relative;
+            width: 100px; 
+            height: 100px; 
+            border-radius: 24px; 
+            overflow: hidden; 
+            margin: 0 auto 20px; 
+            padding: 3px; 
+            background: linear-gradient(0deg, transparent, #ff1e27, #ff1e27);
+            animation: rotateNeon 3s linear infinite;
+            box-shadow: 0 0 20px rgba(255, 30, 39, 0.6);
+        }
+        .avatar-box::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: #0d111c;
+            border-radius: 21px;
+            z-index: 1;
+        }
+        .avatar-box img { 
+            position: relative;
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 21px;
+            z-index: 2;
+        }
+
+        @keyframes rotateNeon {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h2 { font-size: 25px; font-weight: bold; margin: 10px 0; letter-spacing: 0.5px; color: #ffffff; }
+        .subtitle { color: #cbd5e1; font-size: 14px; margin-bottom: 25px; line-height: 1.4; }
+        
+        .tags { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
+        .tag { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.4); color: #10b981; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+        .tag-blue { background: rgba(255, 30, 39, 0.1); border: 1px solid rgba(255, 30, 39, 0.4); color: #ff3b43; }
+        
+        .info-box { background-color: #161c2a; border-radius: 14px; padding: 15px; margin-bottom: 15px; text-align: left; border: 1px solid #222b3e; }
+        .info-title { font-size: 11px; color: #94a3b8; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .info-value { font-size: 16px; font-weight: bold; color: #ffffff; }
+        
+        .key-display { font-family: 'Courier New', monospace; font-size: 19px; color: #ff3b43; text-align: center; background: #090d16; padding: 14px; border-radius: 10px; border: 1px dashed #ff1e27; word-break: break-all; box-shadow: inset 0 0 10px rgba(255, 30, 39, 0.1); }
+        
+        .btn-gen { background-color: #10b981; color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; text-decoration: none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+        .btn-gen:hover { background-color: #059669; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5); }
+        
+        .btn-copy { background: linear-gradient(135deg, #ff1e27, #b90e14); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(255, 30, 39, 0.3); }
+        .btn-copy:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255, 30, 39, 0.5); }
+        
+        .btn-back { background: transparent; border: 1px solid #222b3e; color: #94a3b8; width: 100%; padding: 12px; border-radius: 12px; font-size: 14px; cursor: pointer; text-decoration: none; display: block; box-sizing: border-box; transition: 0.3s; }
+        .btn-back:hover { background: #161c2a; color: #ffffff; }
+        
+        .time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+    </style>
+</head>
+<body>
+
+<div class="card" id="app">
+    </div>
+
+<script>
+    const currentUrl = "https://kiettuan-12.github.io/getkeynhanh/";
+
+    function generateRandomKey() {
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let randStr = '';
+        for (let i = 0; i < 8; i++) { randStr += chars.charAt(Math.floor(Math.random() * chars.length)); }
+        return 'kietlac_' + randStr;
+    }
+
+    function formatTime(timestamp) {
+        let d = new Date(timestamp);
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth()+1).padStart(2, '0')}/${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    }
+
+    function main() {
+        const app = document.getElementById('app');
+        const urlParams = new URLSearchParams(window.location.search);
+        const isRedirected = urlParams.get('status') === 'success';
+
+        let savedKey = localStorage.getItem('kt_key');
+        let expireTime = localStorage.getItem('kt_expire');
+        let now = new Date().getTime();
+
+        if (savedKey && expireTime && now < parseInt(expireTime)) {
+            showKeyScreen(app, savedKey, localStorage.getItem('kt_created'), expireTime);
+            return;
+        }
+
+        if (isRedirected) {
+            let created = new Date().getTime();
+            let expire = created + (5 * 60 * 60 * 1000); 
+
+            localStorage.setItem('kt_key', key = generateRandomKey());
+            localStorage.setItem('kt_created', created);
+            localStorage.setItem('kt_expire', expire);
+
+            window.history.replaceState({}, document.title, currentUrl);
+            showKeyScreen(app, key, created, expire);
+            return;
+        }
+
+        showGetScreen(app);
+    }
+
+    function showGetScreen(el) {
+        el.innerHTML = `
+            <div class="avatar-box">
+                <img src="avatar.jpg" alt="Logo">
+            </div>
+            <h2>KT PING 999</h2>
+            <div class="subtitle">Tạo key miễn phí — nhanh & bảo mật</div>
+            <div class="tags">
+                <div class="tag tag-blue">🛡️ Bảo mật</div>
+                <div class="tag tag-blue">🕒 Hạn 5 Giờ</div>
+                <div class="tag tag-blue">📱 1 Thiết bị</div>
+            </div>
+            <div class="time-grid" style="margin-bottom: 25px;">
+                <div class="info-box" style="margin-bottom:0;"><div class="info-title">Thiết bị</div><div class="info-value">1 Device</div></div>
+                <div class="info-box" style="margin-bottom:0;"><div class="info-title">Thời hạn tối đa</div><div class="info-value" style="color:#ef4444;">5h</div></div>
+            </div>
+            <button onclick="redirectToLink4m()" class="btn-gen">⚡ Generate Key</button>
+        `;
+    }
+
+    function showKeyScreen(el, key, created, expire) {
+        el.innerHTML = `
+            <div class="avatar-box">
+                <img src="avatar.jpg" alt="Logo">
+            </div>
+            <h2>Key của bạn</h2>
+            <div class="subtitle">Dùng key này để kích hoạt KT PING 999</div>
+            <div class="tags"><div class="tag">● HỢP LỆ HÔM NAY</div></div>
+            <div class="info-box" style="text-align: center;">
+                <div class="info-title">KEY KÍCH HOẠT</div>
+                <div class="key-display" id="keyText">${key}</div>
+            </div>
+            <div class="time-grid">
+                <div class="info-box"><div class="info-title">Giờ Tạo</div><div class="info-value" style="font-size:12px;">${formatTime(parseInt(created))}</div></div>
+                <div class="info-box"><div class="info-title">Hết Hạn</div><div class="info-value" style="font-size:12px; color:#ef4444;">${formatTime(parseInt(expire))}</div></div>
+            </div>
+            <button class="btn-copy" onclick="copyKey()">📋 Sao chép key</button>
+            <button onclick="localStorage.clear(); location.reload();" class="btn-back">← Xóa key / Lấy key mới</button>
+        `;
+    }
+
+    function redirectToLink4m() {
+        // ========================================================
+        // THAY ĐƯỜNG LINK RÚT GỌN LINK4M BẠN TẠO Ở BƯỚC 1 VÀO ĐÂY:
+        const LINK_RUT_GON_CUA_BAN = "https://link4m.org/B8RNv8Cz"; 
+        // ========================================================
+
+        if (LINK_RUT_GON_CUA_BAN === "https://link4m.org/B8RNv8Cz") {
+            alert("Bạn chưa cấu hình link rút gọn Link4m tại dòng số 123!");
+            return;
+        }
+        window.location.href = https://link4m.org/B8RNv8Cz;
+    }
+
+    function copyKey() {
+        var copyText = document.getElementById("keyText").innerText;
+        navigator.clipboard.writeText(copyText);
+        alert("Đã sao chép key thành công!");
+    }
+
+    main();
+</script>
+</body>
+</html>

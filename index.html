@@ -91,12 +91,13 @@
 <body>
 
 <div class="card" id="app">
-    </div>
+    <!-- Code JavaScript tự động điền nội dung vào đây -->
+</div>
 
 <script>
     // ========================================================
     // CHỈ CẦN THAY MÃ API TOKEN LINK4M CỦA BẠN VÀO DƯỚI ĐÂY:
-    const API_TOKEN_LINK4M = "ĐIỀN_API_TOKEN_LINK4M_CỦA_BẠN"; 
+    const API_TOKEN_LINK4M = "6a4bbf8308a0ee3cd07f84ae"; 
     // ========================================================
 
     const currentUrl = window.location.href.split('?')[0];
@@ -146,7 +147,7 @@
     function showGetScreen(el) {
         el.innerHTML = `
             <div class="avatar-box">
-                <img src="https://i.imgur.com/R39nB63.png" alt="Logo">
+                <img src="avatar.jpg" alt="Logo">
             </div>
             <h2>KT PING 999</h2>
             <div class="subtitle">Tạo key miễn phí — nhanh & bảo mật</div>
@@ -166,7 +167,7 @@
     function showKeyScreen(el, key, created, expire) {
         el.innerHTML = `
             <div class="avatar-box">
-                <img src="https://i.imgur.com/R39nB63.png" alt="Logo">
+                <img src="avatar.jpg" alt="Logo">
             </div>
             <h2>Key của bạn</h2>
             <div class="subtitle">Dùng key này để kích hoạt KT PING 999</div>
@@ -185,7 +186,7 @@
     }
 
     function redirectToLink4m() {
-        if (API_TOKEN_LINK4M === "6a4bbf8308a0ee3cd07f84ae" || API_TOKEN_LINK4M === "") {
+        if (API_TOKEN_LINK4M === "ĐIỀN_API_TOKEN_LINK4M_CỦA_BẠN" || API_TOKEN_LINK4M === "") {
             alert("Lỗi: Bạn chưa cấu hình mã API Token của Link4m trong code!");
             return;
         }
@@ -211,4 +212,4 @@
     main();
 </script>
 </body>
-  </html>
+</html>

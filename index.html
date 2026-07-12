@@ -126,7 +126,8 @@
             let created = new Date().getTime();
             let expire = created + (5 * 60 * 60 * 1000); 
 
-            localStorage.setItem('kt_key', key = generateRandomKey());
+            let key = generateRandomKey();
+            localStorage.setItem('kt_key', key);
             localStorage.setItem('kt_created', created);
             localStorage.setItem('kt_expire', expire);
 
@@ -180,16 +181,7 @@
     }
 
     function redirectToLink4m() {
-        // ========================================================
-        // THAY ĐƯỜNG LINK RÚT GỌN LINK4M BẠN TẠO Ở BƯỚC 1 VÀO ĐÂY:
-        const LINK_RUT_GON_CUA_BAN = "https://link4m.org/B8RNv8Cz"; 
-        // ========================================================
-
-        if (LINK_RUT_GON_CUA_BAN === "https://link4m.org/B8RNv8Cz") {
-            alert("Bạn chưa cấu hình link rút gọn Link4m tại dòng số 123!");
-            return;
-        }
-        window.location.href = https://link4m.org/B8RNv8Cz;
+        window.location.href = "https://link4m.org/B8RNv8Cz";
     }
 
     function copyKey() {

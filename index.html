@@ -91,13 +91,13 @@
 <body>
 
 <div class="card" id="app">
-    <!-- Code JavaScript tự động điền nội dung vào đây -->
+    <!-- Nội dung hiển thị tự động bằng JS -->
 </div>
 
 <script>
     // ========================================================
-    // CHỈ CẦN THAY MÃ API TOKEN LINK4M CỦA BẠN VÀO DƯỚI ĐÂY:
-    const API_TOKEN_LINK4M = "6a4bbf8308a0ee3cd07f84ae"; 
+    // ĐIỀN CHÍNH XÁC TOKEN API LINK4M CỦA BẠN VÀO ĐÂY:
+    const API_TOKEN_LINK4M = "ĐIỀN_API_TOKEN_LINK4M_CỦA_BẠN"; 
     // ========================================================
 
     const currentUrl = window.location.href.split('?')[0];
@@ -186,21 +186,14 @@
     }
 
     function redirectToLink4m() {
-        if (API_TOKEN_LINK4M === "ĐIỀN_API_TOKEN_LINK4M_CỦA_BẠN" || API_TOKEN_LINK4M === "") {
-            alert("Lỗi: Bạn chưa cấu hình mã API Token của Link4m trong code!");
+        if (API_TOKEN_LINK4M === "6a4bbf8308a0ee3cd07f84ae" || API_TOKEN_LINK4M === "") {
+            alert("Lỗi: Bạn chưa cấu hình mã API Token của Link4m!");
             return;
         }
 
         let targetUrl = currentUrl + "?status=success";
-        let apiUrl = `https://link4m.com/api-digital?api=${API_TOKEN_LINK4M}&url=${encodeURIComponent(targetUrl)}`;
-        
-        fetch(apiUrl)
-            .then(res => res.json())
-            .then(data => {
-                if(data.shortenedUrl) { window.location.href = data.shortenedUrl; } 
-                else { alert("Lỗi Link4m: " + (data.message || "Không thể tạo link rút gọn!")); }
-            })
-            .catch(() => { alert("Lỗi kết nối API Link4m! Nếu đang test trên Acode hãy up lên GitHub Pages để chạy chuẩn nhé."); });
+        // Chuyển hướng trực tiếp trình duyệt sang Link4m (Bỏ fetch ngầm - Sạch bóng lỗi CORS)
+        window.location.href = `https://link4m.com/api-digital?api=${API_TOKEN_LINK4M}&url=${encodeURIComponent(targetUrl)}`;
     }
 
     function copyKey() {
@@ -212,4 +205,4 @@
     main();
 </script>
 </body>
-</html>
+</html>                

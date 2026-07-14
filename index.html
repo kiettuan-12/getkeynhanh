@@ -3,194 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KT PING 999 - Hệ Thống Key</title>
+    <title>KT PING - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { 
-            background-color: #060913; 
-            color: #ffffff; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0; 
-            padding: 15px; 
-            box-sizing: border-box; 
-        }
-        .card { 
-            background-color: #0d111c; 
-            border: 1px solid #ff1e273b; 
-            border-radius: 20px; 
-            width: 100%; 
-            max-width: 400px; 
-            padding: 30px 20px; 
-            text-align: center; 
-            box-shadow: 0 10px 30px rgba(255, 30, 39, 0.15); 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* --- HIỆU ỨNG VIỀN ẢNH CHẠY NEON ĐỎ NHÒE SÁNG --- */
-        .avatar-box { 
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
             position: relative;
-            width: 100px; 
-            height: 100px; 
-            border-radius: 24px; 
-            overflow: hidden; 
-            margin: 0 auto 20px; 
-            padding: 3px; 
-            background: linear-gradient(0deg, transparent, #ff1e27, #ff1e27);
-            animation: rotateNeon 3s linear infinite;
-            box-shadow: 0 0 20px rgba(255, 30, 39, 0.6);
         }
-        .avatar-box::before {
+
+        /* 🎥 VIDEO NỀN ĐẰNG SAU */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            /* Hiệu ứng mờ nhoè đằng sau */
+            filter: blur(12px) brightness(0.6); 
+            transform: scale(1.1); /* Tránh lộ viền trắng khi blur */
+        }
+
+        /* Khóa bao phủ toàn màn hình */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.95); /* Nền trắng hơi trong suốt */
+            border: 2px solid #ff4d4d;
+            border-radius: 30px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 77, 0.3);
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 🔴 VIỀN LED ĐỎ - TRẮNG CHẠY XUNG QUANH AVATAR */
+        .avatar-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 25px auto;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 5px;
+        }
+
+        /* Hiệu ứng dải màu xoay tạo viền LED chạy */
+        .avatar-wrapper::before {
             content: '';
             position: absolute;
-            inset: 3px;
-            background: #0d111c;
-            border-radius: 21px;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(#ff4d4d, #ffffff, #ff4d4d, #ffffff);
+            animation: rotateLed 3s linear infinite;
             z-index: 1;
         }
-        .avatar-box img { 
+
+        /* Khung ảnh đè lên trên dải xoay */
+        .avatar-container {
             position: relative;
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            border-radius: 21px;
             z-index: 2;
+            width: 100px;
+            height: 100px;
+            background: #ffffff;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes rotateNeon {
+        /* Ảnh của ông bên trong */
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes rotateLed {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        h2 { font-size: 25px; font-weight: bold; margin: 10px 0; letter-spacing: 0.5px; color: #ffffff; }
-        .subtitle { color: #cbd5e1; font-size: 14px; margin-bottom: 25px; line-height: 1.4; }
-        
-        .tags { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
-        .tag { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.4); color: #10b981; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
-        .tag-blue { background: rgba(255, 30, 39, 0.1); border: 1px solid rgba(255, 30, 39, 0.4); color: #ff3b43; }
-        
-        .info-box { background-color: #161c2a; border-radius: 14px; padding: 15px; margin-bottom: 15px; text-align: left; border: 1px solid #222b3e; }
-        .info-title { font-size: 11px; color: #94a3b8; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
-        .info-value { font-size: 16px; font-weight: bold; color: #ffffff; }
-        
-        .key-display { font-family: 'Courier New', monospace; font-size: 19px; color: #ff3b43; text-align: center; background: #090d16; padding: 14px; border-radius: 10px; border: 1px dashed #ff1e27; word-break: break-all; box-shadow: inset 0 0 10px rgba(255, 30, 39, 0.1); }
-        
-        .btn-gen { background-color: #10b981; color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; text-decoration: none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
-        .btn-gen:hover { background-color: #059669; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5); }
-        
-        .btn-copy { background: linear-gradient(135deg, #ff1e27, #b90e14); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(255, 30, 39, 0.3); }
-        .btn-copy:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255, 30, 39, 0.5); }
-        
-        .btn-back { background: transparent; border: 1px solid #222b3e; color: #94a3b8; width: 100%; padding: 12px; border-radius: 12px; font-size: 14px; cursor: pointer; text-decoration: none; display: block; box-sizing: border-box; transition: 0.3s; }
-        .btn-back:hover { background: #161c2a; color: #ffffff; }
-        
-        .time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        h1 {
+            color: #ff4d4d;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(255, 77, 77, 0.1);
+        }
+
+        .subtitle {
+            color: rgba(0, 0, 0, 0.4);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ff4d4d;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.15);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #ff4d4d;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+        }
+
+        .btn-login:hover {
+            background: #e03b3b;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+            margin: 0 10px;
+        }
+
+        .btn-getkey {
+            width: 100%;
+            padding: 16px;
+            background: #ffffff;
+            color: #ff4d4d;
+            border: 2px solid #ff4d4d;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-getkey:hover {
+            background: rgba(255, 77, 77, 0.05);
+        }
+
+        .server-status {
+            margin-top: 25px;
+            display: inline-block;
+            padding: 6px 16px;
+            background: #e6f7ed;
+            color: #2e7d32;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #2e7d32;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.35);
+            font-weight: 600;
+        }
+
+        /* Màn hình Game/App sau khi mở khóa thành công */
+        #success-screen {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 100000;
+            position: relative;
+            color: white;
+        }
+
+        #success-screen h2 {
+            font-size: 48px;
+            color: #2e7d32;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(46, 125, 50, 0.5);
+        }
     </style>
 </head>
 <body>
 
-<div class="card" id="app">
+    <video class="video-background" autoplay muted loop playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-red-and-white-background-34320-large.mp4" type="video/mp4">
+    </video>
+
+    <div id="lock-screen">
+        <div class="container">
+            <div class="avatar-wrapper">
+                <div class="avatar-container">
+                    <img src="https://i.imgur.com/uRovv2r.png" alt="Avatar">
+                </div>
+            </div>
+            
+            <h1>KT PING ⚡</h1>
+            <div class="subtitle">Premium Ping ⚡</div>
+
+            <div class="input-group">
+                <input type="text" id="key-input" placeholder="Nhập Key của bạn">
+            </div>
+
+            <button class="btn-login" onclick="verifyKey()">ĐĂNG NHẬP</button>
+
+            <div class="divider">HOẶC</div>
+
+            <a class="btn-getkey" href="https://link4m.org/oBqJiuC" target="_blank">LẤY KEY MIỄN PHÍ</a>
+
+            <br>
+            <div class="server-status">
+                <span class="status-dot"></span>SERVER ONLINE
+            </div>
+
+            <div class="footer-info">
+                <span>yamete</span>
+                <span>á á I cư i cư</span>
+            </div>
+        </div>
     </div>
 
-<script>
-    const currentUrl = "https://kiettuan-12.github.io/getkeynhanh/";
+    <div id="success-screen">
+        <h2>DONE!</h2>
+        <p style="color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Hệ thống đã kích hoạt thành công.</p>
+    </div>
 
-    function generateRandomKey() {
-        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let randStr = '';
-        for (let i = 0; i < 8; i++) { randStr += chars.charAt(Math.floor(Math.random() * chars.length)); }
-        return 'kietlac_' + randStr;
-    }
+    <script>
+        const EXPIRE_TIME = 5 * 60 * 60 * 1000; // 5 tiếng dùng thử
 
-    function formatTime(timestamp) {
-        let d = new Date(timestamp);
-        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth()+1).padStart(2, '0')}/${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    }
-
-    function main() {
-        const app = document.getElementById('app');
-        const urlParams = new URLSearchParams(window.location.search);
-        const isRedirected = urlParams.get('status') === 'success';
-
-        let savedKey = localStorage.getItem('kt_key');
-        let expireTime = localStorage.getItem('kt_expire');
-        let now = new Date().getTime();
-
-        if (savedKey && expireTime && now < parseInt(expireTime)) {
-            showKeyScreen(app, savedKey, localStorage.getItem('kt_created'), expireTime);
-            return;
+        function getDeviceID() {
+            let devId = localStorage.getItem("device_id");
+            if (!devId) {
+                devId = 'DEV' + Math.random().toString(36).substring(2, 8).toUpperCase();
+                localStorage.setItem("device_id", devId);
+            }
+            return devId;
         }
 
-        if (isRedirected) {
-            let created = new Date().getTime();
-            let expire = created + (5 * 60 * 60 * 1000); 
-
-            let key = generateRandomKey();
-            localStorage.setItem('kt_key', key);
-            localStorage.setItem('kt_created', created);
-            localStorage.setItem('kt_expire', expire);
-
-            window.history.replaceState({}, document.title, currentUrl);
-            showKeyScreen(app, key, created, expire);
-            return;
-        }
-
-        showGetScreen(app);
-    }
-
-    function showGetScreen(el) {
-        el.innerHTML = `
-            <div class="avatar-box">
-                <img src="avatar.jpg" alt="Logo">
-            </div>
-            <h2>KT PING 999</h2>
-            <div class="subtitle">Tạo key miễn phí — nhanh & bảo mật</div>
-            <div class="tags">
-                <div class="tag tag-blue">🛡️ Bảo mật</div>
-                <div class="tag tag-blue">🕒 Hạn 5 Giờ</div>
-                <div class="tag tag-blue">📱 1 Thiết bị</div>
-            </div>
-            <div class="time-grid" style="margin-bottom: 25px;">
-                <div class="info-box" style="margin-bottom:0;"><div class="info-title">Thiết bị</div><div class="info-value">1 Device</div></div>
-                <div class="info-box" style="margin-bottom:0;"><div class="info-title">Thời hạn tối đa</div><div class="info-value" style="color:#ef4444;">5h</div></div>
-            </div>
-            <button onclick="redirectToLink4m()" class="btn-gen">⚡ Generate Key</button>
-        `;
-    }
-
-    function showKeyScreen(el, key, created, expire) {
-        el.innerHTML = `
-            <div class="avatar-box">
-                <img src="avatar.jpg" alt="Logo">
-            </div>
-            <h2>Key của bạn</h2>
-            <div class="subtitle">Dùng key này để kích hoạt KT PING 999</div>
-            <div class="tags"><div class="tag">● HỢP LỆ HÔM NAY</div></div>
-            <div class="info-box" style="text-align: center;">
-                <div class="info-title">KEY KÍCH HOẠT</div>
-                <div class="key-display" id="keyText">${key}</div>
-            </div>
-            <div class="time-grid">
-                <div class="info-box"><div class="info-title">Giờ Tạo</div><div class="info-value" style="font-size:12px;">${formatTime(parseInt(created))}</div></div>
-                <div class="info-box"><div class="info-title">Hết Hạn</div><div class="info-value" style="font-size:12px; color:#ef4444;">${formatTime(parseInt(expire))}</div></div>
-            </div>
-            <button class="btn-copy" onclick="copyKey()">📋 Sao chép key</button>
-            <button onclick="localStorage.clear(); location.reload();" class="btn-back">← Xóa key / Lấy key mới</button>
-        `;
-    }
-
-    function redirectToLink4m() {
-        window.location.href = "https://link4m.org/B8RNv8Cz";
-    }
-
-    function copyKey() {
-        var copyText = document.getElementById("keyText").innerText;
-        navigator.clipboard.writeText(copyText);
-        alert("Đã sao chép key thành công!");
-    }
-
-    main();
-</script>
-</body>
-</html>
+        function generateDeviceKey() {
+            const devId = getDeviceID();
+            const today = new Date();
+            const dateStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate();
+            const seed = devId + "_" + dateStr;
+            
+            let hash = 0;
+            for (let i = 0; i < seed.length; i++) {
+                hash = (hash << 5) - hash + seed.charCodeAt(i);
+                hash |= 0;
+            }
+            const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            let result = "";
+            let absHash = Math.abs(hash);
+            for (let i = 0; i < 9; i++) {
+                absHash = (absHash * 16807) % 2147483647;
+                result += chars[absHash % chars.length];
+            }

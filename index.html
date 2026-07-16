@@ -6,236 +6,29 @@
     <title>KT PING - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-            filter: blur(12px) brightness(0.6); 
-            transform: scale(1.1); 
-        }
-
-        #lock-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 90%;
-            max-width: 400px;
-            background: rgba(21, 28, 46, 0.85); 
-            border: 1px solid rgba(255, 77, 77, 0.2);
-            border-radius: 30px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 77, 77, 0.1);
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 25px auto;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            padding: 5px;
-            box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
-        }
-
-        .avatar-wrapper::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: conic-gradient(#ff4d4d, #ffffff, #ff4d4d, #ffffff);
-            animation: rotateLed 3s linear infinite;
-            z-index: 1;
-        }
-
-        .avatar-container {
-            position: relative;
-            z-index: 2;
-            width: 100px;
-            height: 100px;
-            background: #ffffff;
-            border-radius: 50%;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .avatar-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        @keyframes rotateLed {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        h1 {
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .subtitle {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            outline: none;
-            font-size: 16px;
-            color: #ffffff;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            border-color: #ff4d4d;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.15);
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #ff4d4d, #cc3b3b);
-            color: #ffffff;
-            border: none;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 12px;
-        }
-
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 0 10px;
-        }
-
-        .btn-getkey {
-            width: 100%;
-            padding: 16px;
-            background: transparent;
-            color: #ff4d4d;
-            border: 1px solid #ff4d4d;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .server-status {
-            margin-top: 25px;
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(46, 125, 50, 0.2);
-            color: #81c784;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-dot {
-            height: 8px;
-            width: 8px;
-            background-color: #66bb6a;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 6px;
-        }
-
-        .footer-info {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        #success-screen {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            z-index: 10000;
-            position: relative;
-            color: white;
-        }
-
-        #success-screen h2 {
-            font-size: 48px;
-            color: #66bb6a;
-            margin-bottom: 10px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; position: relative; }
+        .video-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: blur(12px) brightness(0.6); transform: scale(1.1); }
+        #lock-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; z-index: 9999; }
+        .container { position: relative; z-index: 10; width: 90%; max-width: 400px; background: rgba(21, 28, 46, 0.85); border: 1px solid rgba(255, 77, 77, 0.2); border-radius: 30px; padding: 40px 30px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 77, 77, 0.1); text-align: center; backdrop-filter: blur(10px); }
+        .avatar-wrapper { position: relative; width: 110px; height: 110px; margin: 0 auto 25px auto; border-radius: 50%; display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 5px; box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); }
+        .avatar-wrapper::before { content: ''; position: absolute; width: 150%; height: 150%; background: conic-gradient(#ff4d4d, #ffffff, #ff4d4d, #ffffff); animation: rotateLed 3s linear infinite; z-index: 1; }
+        .avatar-container { position: relative; z-index: 2; width: 100px; height: 100px; background: #ffffff; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
+        @keyframes rotateLed { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        h1 { color: #ffffff; font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: 1px; }
+        .subtitle { color: rgba(255, 255, 255, 0.6); font-size: 14px; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        input[type="text"] { width: 100%; padding: 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; outline: none; font-size: 16px; color: #ffffff; text-align: center; transition: all 0.3s ease; }
+        input[type="text"]:focus { border-color: #ff4d4d; background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 10px rgba(255, 77, 77, 0.15); }
+        .btn-login { width: 100%; padding: 16px; background: linear-gradient(135deg, #ff4d4d, #cc3b3b); color: #ffffff; border: none; border-radius: 15px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3); }
+        .divider { display: flex; align-items: center; justify-content: center; margin: 20px 0; color: rgba(255, 255, 255, 0.4); font-size: 12px; }
+        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.1); margin: 0 10px; }
+        .btn-getkey { width: 100%; padding: 16px; background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; border-radius: 15px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
+        .server-status { margin-top: 25px; display: inline-block; padding: 6px 16px; background: rgba(46, 125, 50, 0.2); color: #81c784; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .status-dot { height: 8px; width: 8px; background-color: #66bb6a; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        #success-screen { display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; z-index: 10000; position: relative; color: white; }
+        #success-screen h2 { font-size: 48px; color: #66bb6a; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -260,20 +53,13 @@
             </div>
 
             <button class="btn-login" onclick="verifyKey()">ĐĂNG NHẬP</button>
-
             <div class="divider">HOẶC</div>
 
+            <!-- THAY LINK RÚT GỌN LINK4M CỦA ÔNG VÀO ĐÂY -->
             <a class="btn-getkey" href="https://link4m.org/oBqJiuC" target="_blank">LẤY KEY MIỄN PHÍ</a>
 
             <br>
-            <div class="server-status">
-                <span class="status-dot"></span>SERVER ONLINE
-            </div>
-
-            <div class="footer-info">
-                <span>yamete</span>
-                <span>á á I cư i cư</span>
-            </div>
+            <div class="server-status"><span class="status-dot"></span>SERVER ONLINE</div>
         </div>
     </div>
 
@@ -282,45 +68,43 @@
         <p>Hệ thống đã kích hoạt thành công.</p>
     </div>
 
+    <!-- Hộp thông báo ẩn tên miền -->
     <div id="custom-alert" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100000; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
         <div style="width: 85%; max-width: 320px; background: #151c2e; border: 2px solid #ff4d4d; border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 30px rgba(255, 77, 77, 0.2);">
             <div style="width: 55px; height: 55px; background: rgba(255, 77, 77, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto;">
-                <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: #ff4d4d;">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                </svg>
+                <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: #ff4d4d;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
             </div>
             <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 8px; font-weight: 800;">LỖI KÍCH HOẠT</h3>
-            <p id="alert-message" style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px; line-height: 1.4;">Mã Key không chính xác hoặc đã hết hạn!</p>
+            <p id="alert-message" style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px; line-height: 1.4;"></p>
             <button onclick="closeAlert()" style="width: 100%; padding: 12px; background: #ff4d4d; color: #ffffff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;">ĐỒNG Ý</button>
         </div>
     </div>
 
     <script>
-        const EXPIRE_TIME = 5 * 60 * 60 * 1000; 
-
         function showAlert(msg) {
             document.getElementById("alert-message").innerText = msg;
             document.getElementById("custom-alert").style.display = "flex";
         }
+        function closeAlert() { document.getElementById("custom-alert").style.display = "none"; }
 
-        function closeAlert() {
-            document.getElementById("custom-alert").style.display = "none";
-        }
-
-        function getDeviceID() {
-            let devId = localStorage.getItem("device_id");
-            if (!devId) {
-                devId = 'DEV' + Math.random().toString(36).substring(2, 8).toUpperCase();
-                localStorage.setItem("device_id", devId);
+        // Tạo vân tay thiết bị (Không lo lệch trình duyệt)
+        function getDeviceFingerprint() {
+            const navigator_info = window.navigator.userAgent + window.navigator.language + window.screen.colorDepth + window.screen.width + window.screen.height;
+            let hash = 0;
+            for (let i = 0; i < navigator_info.length; i++) {
+                hash = (hash << 5) - hash + navigator_info.charCodeAt(i);
+                hash |= 0;
             }
-            return devId;
+            return 'DEV' + Math.abs(hash).toString(36).toUpperCase();
         }
 
+        // Tự động xoay vòng key mới sau mỗi 5 tiếng
         function generateDeviceKey() {
-            const devId = getDeviceID();
+            const fingerprint = getDeviceFingerprint();
             const today = new Date();
             const dateStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate();
-            const seed = devId + "_" + dateStr;
+            const hourBlock = Math.floor(today.getHours() / 5); // Chia ngày thành các mốc 5 tiếng
+            const seed = fingerprint + "_" + dateStr + "_" + hourBlock;
             
             let hash = 0;
             for (let i = 0; i < seed.length; i++) {
@@ -338,15 +122,10 @@
         }
 
         window.onload = function() {
-            const keySavedTime = localStorage.getItem("key_saved_time");
-            const now = new Date().getTime();
-
-            if (keySavedTime && (now - keySavedTime < EXPIRE_TIME)) {
+            const lastActive = localStorage.getItem("last_active_key");
+            const activeKey = generateDeviceKey();
+            if (lastActive === activeKey) {
                 showSuccess();
-            } else {
-                localStorage.removeItem("key_saved_time");
-                document.getElementById("lock-screen").style.display = "flex";
-                document.getElementById("success-screen").style.display = "none";
             }
         };
 
@@ -355,16 +134,14 @@
             const correctKey = generateDeviceKey();
 
             if (userInput === correctKey) {
-                const now = new Date().getTime();
-                localStorage.setItem("key_saved_time", now);
-                
+                localStorage.setItem("last_active_key", correctKey);
                 document.getElementById("lock-screen").style.opacity = "0";
                 setTimeout(() => {
                     document.getElementById("lock-screen").style.display = "none";
                     showSuccess();
                 }, 300);
             } else {
-                showAlert("Key thiết bị không chính xác hoặc đã hết hạn!");
+                showAlert("Mã thiết bị không hợp lệ hoặc đã hết hạn ca 5 tiếng!");
             }
         }
 
@@ -374,4 +151,4 @@
         }
     </script>
 </body>
-                                         </html>
+    </html>

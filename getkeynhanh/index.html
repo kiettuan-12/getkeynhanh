@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATPLUS - Nhận Key</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(21, 28, 46, 0.85);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            border-radius: 24px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 77, 77, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+        }
+
+        .icon-box svg {
+            width: 35px;
+            height: 35px;
+            fill: #ff4d4d;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Ô hiển thị mã Key */
+        .key-display-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(255, 77, 77, 0.5);
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ff4d4d;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            word-break: break-all;
+            user-select: all;
+        }
+
+        /* Nút bấm Sao chép */
+        .btn-copy {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff4d4d, #cc3b3b);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.2);
+        }
+
+        .btn-copy:active {
+            transform: scale(0.98);
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24">
+                <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+            </svg>
+        </div>
+
+        <h1>VƯỢT LINK THÀNH CÔNG!</h1>
+        <p>Chúc mừng bạn! Đây là Key kích hoạt của bạn trong ngày hôm nay. Hãy sao chép và dán vào ứng dụng để mở khóa hệ thống.</p>
+
+        <div class="key-display-box" id="key-output">Đang tạo key...</div>
+
+        <button class="btn-copy" onclick="copyKey()">SAO CHÉP KEY QUAY LẠI HỆ THỐNG</button>
+
+        <div class="note">Lưu ý: Key này có hiệu lực trong vòng 5 tiếng kể từ khi kích hoạt.</div>
+    </div>
+
+    <script>
+        function getDeviceID() {
+            let devId = localStorage.getItem("device_id");
+            if (!devId) {
+                // Nếu người dùng bật ẩn danh/chưa có DeviceID thì tự sinh ngẫu nhiên để không bị lỗi trang
+                devId = 'DEV' + Math.random().toString(36).substring(2, 8).toUpperCase();
+                localStorage.setItem("device_id", devId);
+            }
+            return devId;
+        }
+
+        // Hàm tạo Key trùng khớp 100% với trang đăng nhập
+        function generateDeviceKey() {
+            const devId = getDeviceID();
+            const today = new Date();
+            const dateStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate();
+            const seed = devId + "_" + dateStr;
+            
+            let hash = 0;
+            for (let i = 0; i < seed.length; i++) {
+                hash = (hash << 5) - hash + seed.charCodeAt(i);
+                hash |= 0;
+            }
+            const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            let result = "";
+            let absHash = Math.abs(hash);
+            for (let i = 0; i < 9; i++) {
+                absHash = (absHash * 16807) % 2147483647;
+                result += chars[absHash % chars.length];
+            }
+            return `kietlac_${result}`;
+        }
+
+        // Hiện Key ngay khi trang web vừa tải xong
+        window.onload = function() {
+            const generatedKey = generateDeviceKey();
+            document.getElementById("key-output").innerText = generatedKey;
+        };
+
+        // Hàm xử lý việc Click để tự động copy nhanh
+        function copyKey() {
+            const keyText = document.getElementById("key-output").innerText;
+            
+            navigator.clipboard.writeText(keyText).then(() => {
+                alert("Đã sao chép Key thành công vào bộ nhớ tạm!");
+            }).catch(err => {
+                // Phương án dự phòng cho một số trình duyệt cũ hoặc trên điện thoại không hỗ trợ clipboard API trực tiếp
+                const tempInput = document.createElement("input");
+                tempInput.value = keyText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                alert("Đã sao chép Key thành công!");
+            });
+        }
+    </script>
+</body>
+  </html>

@@ -27,6 +27,7 @@
         .btn-getkey { width: 100%; padding: 16px; background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; border-radius: 15px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
         .server-status { margin-top: 25px; display: inline-block; padding: 6px 16px; background: rgba(46, 125, 50, 0.2); color: #81c784; border-radius: 20px; font-size: 12px; font-weight: 600; }
         .status-dot { height: 8px; width: 8px; background-color: #66bb6a; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        .footer-info { display: flex; justify-content: space-between; margin-top: 30px; font-size: 12px; color: rgba(255, 255, 255, 0.3); }
         #success-screen { display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; z-index: 10000; position: relative; color: white; }
         #success-screen h2 { font-size: 48px; color: #66bb6a; margin-bottom: 10px; }
     </style>
@@ -34,7 +35,7 @@
 <body>
 
     <video class="video-background" autoplay muted loop playsinline>
-        <source src="background.mp4" type="video/mp4">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-41763-large.mp4" type="video/mp4">
     </video>
 
     <div id="lock-screen">
@@ -53,13 +54,20 @@
             </div>
 
             <button class="btn-login" onclick="verifyKey()">ĐĂNG NHẬP</button>
+
             <div class="divider">HOẶC</div>
 
-            <!-- THAY LINK RÚT GỌN LINK4M CỦA ÔNG VÀO ĐÂY -->
-            <a class="btn-getkey" href="https://link4m.org/oBqJiuC" target="_blank">LẤY KEY MIỄN PHÍ</a>
+            <a class="btn-getkey" href="https://link4m.org/go/UIazg2CZ" target="_blank">LẤY KEY MIỄN PHÍ</a>
 
             <br>
-            <div class="server-status"><span class="status-dot"></span>SERVER ONLINE</div>
+            <div class="server-status">
+                <span class="status-dot"></span>SERVER ONLINE
+            </div>
+
+            <div class="footer-info">
+                <span>yamete</span>
+                <span>á á I cư i cư</span>
+            </div>
         </div>
     </div>
 
@@ -68,11 +76,12 @@
         <p>Hệ thống đã kích hoạt thành công.</p>
     </div>
 
-    <!-- Hộp thông báo ẩn tên miền -->
     <div id="custom-alert" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100000; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
         <div style="width: 85%; max-width: 320px; background: #151c2e; border: 2px solid #ff4d4d; border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 30px rgba(255, 77, 77, 0.2);">
             <div style="width: 55px; height: 55px; background: rgba(255, 77, 77, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto;">
-                <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: #ff4d4d;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: #ff4d4d;">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
             </div>
             <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 8px; font-weight: 800;">LỖI KÍCH HOẠT</h3>
             <p id="alert-message" style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px; line-height: 1.4;"></p>
@@ -85,9 +94,11 @@
             document.getElementById("alert-message").innerText = msg;
             document.getElementById("custom-alert").style.display = "flex";
         }
-        function closeAlert() { document.getElementById("custom-alert").style.display = "none"; }
 
-        // Tạo vân tay thiết bị (Không lo lệch trình duyệt)
+        function closeAlert() {
+            document.getElementById("custom-alert").style.display = "none";
+        }
+
         function getDeviceFingerprint() {
             const navigator_info = window.navigator.userAgent + window.navigator.language + window.screen.colorDepth + window.screen.width + window.screen.height;
             let hash = 0;
@@ -98,12 +109,11 @@
             return 'DEV' + Math.abs(hash).toString(36).toUpperCase();
         }
 
-        // Tự động xoay vòng key mới sau mỗi 5 tiếng
         function generateDeviceKey() {
             const fingerprint = getDeviceFingerprint();
             const today = new Date();
             const dateStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate();
-            const hourBlock = Math.floor(today.getHours() / 5); // Chia ngày thành các mốc 5 tiếng
+            const hourBlock = Math.floor(today.getHours() / 5); 
             const seed = fingerprint + "_" + dateStr + "_" + hourBlock;
             
             let hash = 0;
@@ -141,7 +151,7 @@
                     showSuccess();
                 }, 300);
             } else {
-                showAlert("Mã thiết bị không hợp lệ hoặc đã hết hạn ca 5 tiếng!");
+                showAlert("Key thiết bị không chính xác hoặc đã hết hạn ca 5 tiếng!");
             }
         }
 

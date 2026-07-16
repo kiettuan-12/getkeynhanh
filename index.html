@@ -23,7 +23,6 @@
             position: relative;
         }
 
-        /* 🎥 VIDEO NỀN ĐẰNG SAU (Dùng tệp tải lên trực tiếp) */
         .video-background {
             position: absolute;
             top: 0;
@@ -36,7 +35,6 @@
             transform: scale(1.1); 
         }
 
-        /* Khóa bao phủ toàn màn hình */
         #lock-screen {
             position: fixed;
             top: 0;
@@ -46,7 +44,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 99999;
+            z-index: 9999;
         }
 
         .container {
@@ -54,16 +52,15 @@
             z-index: 10;
             width: 90%;
             max-width: 400px;
-            background: rgba(255, 255, 255, 0.95); 
-            border: 2px solid #ff4d4d;
+            background: rgba(21, 28, 46, 0.85); 
+            border: 1px solid rgba(255, 77, 77, 0.2);
             border-radius: 30px;
             padding: 40px 30px;
-            box-shadow: 0 15px 35px rgba(255, 77, 77, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 77, 77, 0.1);
             text-align: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
-        /* 🔴 VIỀN LED ĐỎ - TRẮNG CHẠY XUNG QUANH AVATAR */
         .avatar-wrapper {
             position: relative;
             width: 110px;
@@ -75,6 +72,7 @@
             align-items: center;
             overflow: hidden;
             padding: 5px;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
         }
 
         .avatar-wrapper::before {
@@ -98,10 +96,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Ảnh đại diện (Đã đổi sang tệp avatar.jpg) */
         .avatar-container img {
             width: 100%;
             height: 100%;
@@ -114,18 +110,16 @@
         }
 
         h1 {
-            color: #ff4d4d;
+            color: #ffffff;
             font-size: 28px;
             font-weight: 800;
             margin-bottom: 8px;
             letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(255, 77, 77, 0.1);
         }
 
         .subtitle {
-            color: rgba(0, 0, 0, 0.4);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
-            font-weight: 600;
             margin-bottom: 30px;
         }
 
@@ -136,25 +130,26 @@
         input[type="text"] {
             width: 100%;
             padding: 16px;
-            border: 2px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             outline: none;
             font-size: 16px;
+            color: #ffffff;
             text-align: center;
             transition: all 0.3s ease;
-            background-color: #fafafa;
         }
 
         input[type="text"]:focus {
             border-color: #ff4d4d;
-            background-color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 10px rgba(255, 77, 77, 0.15);
         }
 
         .btn-login {
             width: 100%;
             padding: 16px;
-            background: #ff4d4d;
+            background: linear-gradient(135deg, #ff4d4d, #cc3b3b);
             color: #ffffff;
             border: none;
             border-radius: 15px;
@@ -165,16 +160,12 @@
             box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
         }
 
-        .btn-login:hover {
-            background: #e03b3b;
-        }
-
         .divider {
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 20px 0;
-            color: #888;
+            color: rgba(255, 255, 255, 0.4);
             font-size: 12px;
         }
 
@@ -182,16 +173,16 @@
             content: "";
             flex: 1;
             height: 1px;
-            background: #e0e0e0;
+            background: rgba(255, 255, 255, 0.1);
             margin: 0 10px;
         }
 
         .btn-getkey {
             width: 100%;
             padding: 16px;
-            background: #ffffff;
+            background: transparent;
             color: #ff4d4d;
-            border: 2px solid #ff4d4d;
+            border: 1px solid #ff4d4d;
             border-radius: 15px;
             font-size: 16px;
             font-weight: 600;
@@ -201,16 +192,12 @@
             transition: all 0.3s ease;
         }
 
-        .btn-getkey:hover {
-            background: rgba(255, 77, 77, 0.05);
-        }
-
         .server-status {
             margin-top: 25px;
             display: inline-block;
             padding: 6px 16px;
-            background: #e6f7ed;
-            color: #2e7d32;
+            background: rgba(46, 125, 50, 0.2);
+            color: #81c784;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
@@ -219,7 +206,7 @@
         .status-dot {
             height: 8px;
             width: 8px;
-            background-color: #2e7d32;
+            background-color: #66bb6a;
             border-radius: 50%;
             display: inline-block;
             margin-right: 6px;
@@ -230,27 +217,24 @@
             justify-content: space-between;
             margin-top: 30px;
             font-size: 12px;
-            color: rgba(0, 0, 0, 0.35);
-            font-weight: 600;
+            color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Màn hình Game/App sau khi mở khóa thành công */
         #success-screen {
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            z-index: 100000;
+            z-index: 10000;
             position: relative;
             color: white;
         }
 
         #success-screen h2 {
             font-size: 48px;
-            color: #2e7d32;
+            color: #66bb6a;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(46, 125, 50, 0.5);
         }
     </style>
 </head>
@@ -295,11 +279,33 @@
 
     <div id="success-screen">
         <h2>DONE!</h2>
-        <p style="color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Hệ thống đã kích hoạt thành công.</p>
+        <p>Hệ thống đã kích hoạt thành công.</p>
+    </div>
+
+    <div id="custom-alert" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100000; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+        <div style="width: 85%; max-width: 320px; background: #151c2e; border: 2px solid #ff4d4d; border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 30px rgba(255, 77, 77, 0.2);">
+            <div style="width: 55px; height: 55px; background: rgba(255, 77, 77, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto;">
+                <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: #ff4d4d;">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+            </div>
+            <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 8px; font-weight: 800;">LỖI KÍCH HOẠT</h3>
+            <p id="alert-message" style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px; line-height: 1.4;">Mã Key không chính xác hoặc đã hết hạn!</p>
+            <button onclick="closeAlert()" style="width: 100%; padding: 12px; background: #ff4d4d; color: #ffffff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;">ĐỒNG Ý</button>
+        </div>
     </div>
 
     <script>
         const EXPIRE_TIME = 5 * 60 * 60 * 1000; 
+
+        function showAlert(msg) {
+            document.getElementById("alert-message").innerText = msg;
+            document.getElementById("custom-alert").style.display = "flex";
+        }
+
+        function closeAlert() {
+            document.getElementById("custom-alert").style.display = "none";
+        }
 
         function getDeviceID() {
             let devId = localStorage.getItem("device_id");
@@ -358,7 +364,7 @@
                     showSuccess();
                 }, 300);
             } else {
-                alert("Key thiết bị không chính xác hoặc đã hết hạn!");
+                showAlert("Key thiết bị không chính xác hoặc đã hết hạn!");
             }
         }
 
@@ -368,4 +374,4 @@
         }
     </script>
 </body>
-                </html>
+                                         </html>
